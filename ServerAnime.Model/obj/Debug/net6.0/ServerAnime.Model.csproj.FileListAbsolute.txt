@@ -1,0 +1,12 @@
+C:\Users\Bryan\Desktop\ServerAnime\ServerAnime.Model\bin\Debug\net6.0\ServerAnime.Model.deps.json
+C:\Users\Bryan\Desktop\ServerAnime\ServerAnime.Model\bin\Debug\net6.0\ServerAnime.Model.dll
+C:\Users\Bryan\Desktop\ServerAnime\ServerAnime.Model\bin\Debug\net6.0\ServerAnime.Model.pdb
+C:\Users\Bryan\Desktop\ServerAnime\ServerAnime.Model\obj\Debug\net6.0\ServerAnime.Model.csproj.AssemblyReference.cache
+C:\Users\Bryan\Desktop\ServerAnime\ServerAnime.Model\obj\Debug\net6.0\ServerAnime.Model.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Bryan\Desktop\ServerAnime\ServerAnime.Model\obj\Debug\net6.0\ServerAnime.Model.AssemblyInfoInputs.cache
+C:\Users\Bryan\Desktop\ServerAnime\ServerAnime.Model\obj\Debug\net6.0\ServerAnime.Model.AssemblyInfo.cs
+C:\Users\Bryan\Desktop\ServerAnime\ServerAnime.Model\obj\Debug\net6.0\ServerAnime.Model.csproj.CoreCompileInputs.cache
+C:\Users\Bryan\Desktop\ServerAnime\ServerAnime.Model\obj\Debug\net6.0\ServerAnime.Model.dll
+C:\Users\Bryan\Desktop\ServerAnime\ServerAnime.Model\obj\Debug\net6.0\refint\ServerAnime.Model.dll
+C:\Users\Bryan\Desktop\ServerAnime\ServerAnime.Model\obj\Debug\net6.0\ServerAnime.Model.pdb
+C:\Users\Bryan\Desktop\ServerAnime\ServerAnime.Model\obj\Debug\net6.0\ref\ServerAnime.Model.dll
