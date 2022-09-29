@@ -12,6 +12,8 @@ namespace ServerAnime.Model
 
         public int Id { get; set; }
         public string Nombre { get; set; } = null!;
+        public DateTime? CreatedAt { get; set; }
+        public DateTime? UpdateAt { get; set; }
 
         public virtual ICollection<Catalogo> Catalogos { get; set; }
     }

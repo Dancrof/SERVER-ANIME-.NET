@@ -7,7 +7,8 @@ using ServerAnime.Model;
 namespace ServerAnime.Data.DataContext
 {
     public partial class serveranimedbContext : DbContext
-    {   
+    {
+
         public serveranimedbContext(DbContextOptions<serveranimedbContext> options)
             : base(options)
         {
@@ -127,9 +128,18 @@ namespace ServerAnime.Data.DataContext
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnType("timestamp")
+                    .HasColumnName("created_at")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
                 entity.Property(e => e.Nombre)
                     .HasMaxLength(255)
                     .HasColumnName("nombre");
+
+                entity.Property(e => e.UpdateAt)
+                    .HasColumnType("timestamp")
+                    .HasColumnName("update_at");
             });
 
             modelBuilder.Entity<Estado>(entity =>

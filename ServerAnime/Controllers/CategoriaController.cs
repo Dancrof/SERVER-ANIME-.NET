@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServerAnime.Data.Repositories;
 using ServerAnime.Model;
+using ServerAnime.Model.ModelDto;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,11 +18,15 @@ namespace ServerAnime.Controllers
 
         // GET: api/<CategoriaController>
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetAll([FromQuery] int? page)
         {
             //await _categoriaRepo.GetAllAsync();
 
-            return StatusCode(StatusCodes.Status200OK, await _categoriaRepo.GetAllAsync());
+            return StatusCode(StatusCodes.Status200OK, new {
+                page = CategoriaRepository.total_pages,
+                quantityShow = await _categoriaRepo.GetAllAsync(page),
+                currentPage = CategoriaRepository._page
+            });
         }
 
         // GET api/<CategoriaController>/5
@@ -33,10 +38,11 @@ namespace ServerAnime.Controllers
 
         // POST api/<CategoriaController>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Categorium modelo)
+        public async Task<IActionResult> Post([FromBody] CategoriaDto modelo)
         {
+            Categorium n = new Categorium();
             // await _categoriaRepo.CreateAsync(modelo);
-            return StatusCode(StatusCodes.Status201Created, await _categoriaRepo.CreateAsync(modelo));
+            return StatusCode(StatusCodes.Status201Created, await _categoriaRepo.CreateAsync(n));
         }
 
         // PUT api/<CategoriaController>/5

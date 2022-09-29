@@ -13,6 +13,13 @@ namespace ServerAnime.Data.Repositories
     {
         private readonly serveranimedbContext _dbContext;
 
+        //cantidad de elementos por pagina
+        private readonly int quantityShow = 10;
+        //VAriables publicas de paginacion
+        public static int _page;
+        public static decimal total_quantityShow;
+        public static int total_pages;
+        
         public CategoriaRepository(serveranimedbContext context) => _dbContext = context;
 
         public async Task<Categorium> CreateAsync(Categorium modelo)
@@ -30,9 +37,13 @@ namespace ServerAnime.Data.Repositories
             return true;
         }
 
-        public async Task<IEnumerable<Categorium>> GetAllAsync()
+        public async Task<IEnumerable<Categorium>> GetAllAsync(int? page)
         {
-            return  _dbContext.Categoria.Include(e=> e.Catalogos).ToList();
+            _page = page ?? 1;
+            total_quantityShow = await _dbContext.Categoria.CountAsync();
+            total_pages = (int)Math.Ceiling(total_quantityShow / quantityShow);
+            
+            return  await _dbContext.Categoria.Skip((_page - 1) * quantityShow).Take(quantityShow).Include(e=> e.Catalogos).ToListAsync();
         }
 
         public async Task<Categorium> GetOneAsync(int id)
@@ -41,7 +52,8 @@ namespace ServerAnime.Data.Repositories
         }
 
         public async Task<bool> UpdateOneAsync(int id, Categorium modelo)
-        {          
+        {
+            modelo.UpdateAt = new DateTime();
             _dbContext.Update(modelo);
             await _dbContext.SaveChangesAsync();
             return true;
