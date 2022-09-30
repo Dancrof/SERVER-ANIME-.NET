@@ -7,8 +7,7 @@ using ServerAnime.Model;
 namespace ServerAnime.Data.DataContext
 {
     public partial class serveranimedbContext : DbContext
-    {
-
+    {      
         public serveranimedbContext(DbContextOptions<serveranimedbContext> options)
             : base(options)
         {
@@ -19,6 +18,7 @@ namespace ServerAnime.Data.DataContext
         public virtual DbSet<Categorium> Categoria { get; set; } = null!;
         public virtual DbSet<Estado> Estados { get; set; } = null!;
         public virtual DbSet<Genero> Generos { get; set; } = null!;
+        public virtual DbSet<Usuario> Usuarios { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -192,6 +192,30 @@ namespace ServerAnime.Data.DataContext
                 entity.Property(e => e.UpdateAt)
                     .HasColumnType("timestamp")
                     .HasColumnName("update_at");
+            });
+
+            modelBuilder.Entity<Usuario>(entity =>
+            {
+                entity.ToTable("usuario");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnType("timestamp")
+                    .HasColumnName("created_at")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.Password)
+                    .HasMaxLength(45)
+                    .HasColumnName("password");
+
+                entity.Property(e => e.UpdateAt)
+                    .HasColumnType("timestamp")
+                    .HasColumnName("update_at");
+
+                entity.Property(e => e.Username)
+                    .HasMaxLength(45)
+                    .HasColumnName("username");
             });
 
             OnModelCreatingPartial(modelBuilder);
