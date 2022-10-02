@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using ServerAnime.Data.DataContext;
 using ServerAnime.Model;
 using System;
@@ -54,7 +55,7 @@ namespace ServerAnime.Data.Repositories
             Total_quantityShow = await _dbContext.Categoria.CountAsync();
             Total_pages = (int)Math.Ceiling(Total_quantityShow / quantityShow);
             
-            return  _dbContext.Categoria.Skip((_Page - 1) * quantityShow).Take(quantityShow).Include(e => e.Catalogos);
+            return  await _dbContext.Categoria.Skip((_Page - 1) * quantityShow).Take(quantityShow).Include(e => e.Catalogos).ToListAsync();
         }
 
         public async Task<Categorium> GetOneAsync(int id)
@@ -66,13 +67,19 @@ namespace ServerAnime.Data.Repositories
         {
             Categorium filter = await GetOneAsync(id);
             if (filter != null)
-            {
-                modelo.UpdateAt = new DateTime();
-                _dbContext.Update(modelo);
+            {            
+                modelo.UpdateAt = Convert.ToDateTime(DateTime.Now.ToString("yyyy-dd-MM HH:mm:ss"));
+                //filter.UpdateAt = Convert.ToDateTime(DateTime.Now.ToString("yyyy-dd-MM HH:mm:ss"));
+                _dbContext.Categoria.Update(modelo);
                 await _dbContext.SaveChangesAsync();
                 return true;
             }
             return false;
+        }
+
+        public async Task<IEnumerable<Categorium>> GetAllByName(string filter)
+        {
+           return await _dbContext.Categoria.Where(e => e.Nombre.Contains(filter)).ToListAsync();
         }
     }
 }

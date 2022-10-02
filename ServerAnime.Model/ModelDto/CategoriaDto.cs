@@ -1,12 +1,12 @@
 ﻿using ServerAnime.Model;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ServerAnime.Model.ModelDto
 {
     public class CategoriaDto
-    {
-        [Required]
-        public string Nombre { get; set; }
-        public Categorium categorium { get; set; }
+    {          
+        [Required(ErrorMessage = "El campo Nombre es obligatorio")]
+        public string Nombre { get; set; }       
     }
 }

@@ -13,5 +13,6 @@ namespace ServerAnime.Data.Repositories
         Task<Entity> GetOneAsync(int id);
         Task<bool> UpdateOneAsync(int id, Entity modelo);
         Task<bool> DeleteOneAsync(int id);
+        Task<IEnumerable<Entity>> GetAllByName(string filter);
     }
 }

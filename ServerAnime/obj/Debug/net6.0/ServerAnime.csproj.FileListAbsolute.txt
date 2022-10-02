@@ -35,3 +35,5 @@ C:\Users\Bryan\Desktop\ServerAnime\ServerAnime\bin\Debug\net6.0\ServerAnime.Data
 C:\Users\Bryan\Desktop\ServerAnime\ServerAnime\bin\Debug\net6.0\ServerAnime.Model.dll
 C:\Users\Bryan\Desktop\ServerAnime\ServerAnime\bin\Debug\net6.0\ServerAnime.Data.pdb
 C:\Users\Bryan\Desktop\ServerAnime\ServerAnime\bin\Debug\net6.0\ServerAnime.Model.pdb
+C:\Users\Bryan\Desktop\ServerAnime\ServerAnime\bin\Debug\net6.0\AutoMapper.dll
+C:\Users\Bryan\Desktop\ServerAnime\ServerAnime\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

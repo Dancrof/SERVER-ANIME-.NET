@@ -1,8 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "LvBJ6s8v+Lc9eAS3L2kma2acDuMscbi888+2KEmH4nqwSytlSCPBT+gtSB8Pq6l3yCU4YUxzEUlsjbyEUq2yFA==",
+  "dgSpecHash": "tGHOr4mdlaa/F6hQ0gsPOuhx8Ba7kF2i6yfLQVNLEJF5pqe6Q3x02jx/kwQ/CpYwsB7B5yDnSs0iRyUnZpRChw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Bryan\\Desktop\\ServerAnime\\ServerAnime.Model\\ServerAnime.Model.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Bryan\\.nuget\\packages\\automapper\\12.0.0\\automapper.12.0.0.nupkg.sha512",
+    "C:\\Users\\Bryan\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",
+    "C:\\Users\\Bryan\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
+    "C:\\Users\\Bryan\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\6.0.0\\microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512",
+    "C:\\Users\\Bryan\\.nuget\\packages\\microsoft.extensions.options\\6.0.0\\microsoft.extensions.options.6.0.0.nupkg.sha512",
+    "C:\\Users\\Bryan\\.nuget\\packages\\microsoft.extensions.primitives\\6.0.0\\microsoft.extensions.primitives.6.0.0.nupkg.sha512",
+    "C:\\Users\\Bryan\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+  ],
   "logs": []
 }

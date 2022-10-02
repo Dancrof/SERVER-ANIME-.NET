@@ -1,21 +1,29 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using ServerAnime.Data.Repositories;
 using ServerAnime.Model;
 using ServerAnime.Model.ModelDto;
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ServerAnime.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/categoria")]
     [ApiController]
     public class CategoriaController : ControllerBase
     {
         private readonly IGenericRepository<Categorium> _categoriaRepo;
+        private readonly IMapper _mapper;
 
-        public CategoriaController(IGenericRepository<Categorium> categoriaRepo) => _categoriaRepo = categoriaRepo;
+        public CategoriaController(IGenericRepository<Categorium> categoriaRepo, IMapper mapper)
+        {
+            this._categoriaRepo = categoriaRepo;
+            this._mapper = mapper;
+        }
 
-        // GET: api/<CategoriaController>
+        // GET: api/categoria
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] int? page)
         {
@@ -34,7 +42,21 @@ namespace ServerAnime.Controllers
             }
         }
 
-        // GET api/<CategoriaController>/5
+        // GET: api/categoria/filter
+        [HttpGet("filter")]
+        public async Task<IActionResult> GetFilterByName([FromQuery][Required] string filter)
+        {
+            try
+            {
+                return StatusCode(StatusCodes.Status200OK, await _categoriaRepo.GetAllByName(filter));
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, e);
+            }
+        }
+
+        // GET api/categoria/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
@@ -53,13 +75,14 @@ namespace ServerAnime.Controllers
             }
         }
 
-        // POST api/<CategoriaController>
+        // POST api/categoria
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Categorium modelo)
+        public async Task<IActionResult> Post([FromBody] CategoriaDto modelo)
         {
             try
             {
-                return StatusCode(StatusCodes.Status201Created, await _categoriaRepo.CreateAsync(modelo));
+               // Categorium categoriaMap = _mapper.Map<Categorium>(modelo);
+                return StatusCode(StatusCodes.Status201Created, await _categoriaRepo.CreateAsync(this.RequesCategoria(modelo)));
             }
             catch (Exception e)
             {
@@ -67,13 +90,13 @@ namespace ServerAnime.Controllers
             }
         }
 
-        // PUT api/<CategoriaController>/5
+        // PUT api/categoria/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] Categorium modelo)
+        public async Task<IActionResult> Put([Required] int id, [FromBody] CategoriaDto modelo)
         {
             try
             {
-                bool status = await _categoriaRepo.UpdateOneAsync(id, modelo);
+                bool status = await _categoriaRepo.UpdateOneAsync(id, this.RequesCategoria(modelo));
                 return this.ValidIfExistElement(status, $"Categoria con Id: {id} no existe", $"Categoria con Id: {id} se actualizo con exito");
             }
             catch (Exception e)
@@ -82,7 +105,7 @@ namespace ServerAnime.Controllers
             }
         }
 
-        // DELETE api/<CategoriaController>/5
+        // DELETE api/categoria/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -105,6 +128,12 @@ namespace ServerAnime.Controllers
                 return StatusCode(StatusCodes.Status200OK, new { etado = itemStatus, mesagge = msgOk });
             }
             return StatusCode(StatusCodes.Status404NotFound, new { etado = itemStatus, mesagge = msgError });
+        }
+
+        //convietre el json a objeto categoria
+        private Categorium RequesCategoria(CategoriaDto categoriaDto)
+        {
+            return new Categorium() { Nombre = categoriaDto.Nombre };
         }
     }
 }
