@@ -64,6 +64,7 @@ namespace ServerAnime.Data.Repositories
             {
                 filter.UpdateAt = Convert.ToDateTime(DateTime.Now.ToString("yyyy-dd-MM HH:mm:ss"));
                 filter.Nombre = modelo.Nombre;
+                _dbContext.Categoria.Update(filter);
                 await _dbContext.SaveChangesAsync();
                 return true;
             }
