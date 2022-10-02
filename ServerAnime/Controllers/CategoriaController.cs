@@ -4,7 +4,6 @@ using ServerAnime.Data.Repositories;
 using ServerAnime.Model;
 using ServerAnime.Model.ModelDto;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -58,7 +57,7 @@ namespace ServerAnime.Controllers
 
         // GET api/categoria/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> GetOneById(int id)
         {
             try
             {
@@ -77,12 +76,13 @@ namespace ServerAnime.Controllers
 
         // POST api/categoria
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CategoriaDto modelo)
+        public async Task<IActionResult> PostNewCtegoria([FromBody] CategoriaDto modelo)
         {
             try
             {
-               // Categorium categoriaMap = _mapper.Map<Categorium>(modelo);
-                return StatusCode(StatusCodes.Status201Created, await _categoriaRepo.CreateAsync(this.RequesCategoria(modelo)));
+                // Categorium categoriaMap = _mapper.Map<Categorium>(modelo);
+                //return StatusCode(StatusCodes.Status201Created, await _categoriaRepo.CreateAsync(this.RequesCategoria(modelo)));
+                return this.ValidIfExistElementByEntity(await _categoriaRepo.CreateAsync(this.RequesCategoria(modelo)), $"Categoria con Nombre: {modelo.Nombre} ya existe", $"Categoria con Nombre: {modelo.Nombre} se creo con exito");
             }
             catch (Exception e)
             {
@@ -97,7 +97,7 @@ namespace ServerAnime.Controllers
             try
             {
                 bool status = await _categoriaRepo.UpdateOneAsync(id, this.RequesCategoria(modelo));
-                return this.ValidIfExistElement(status, $"Categoria con Id: {id} no existe", $"Categoria con Id: {id} se actualizo con exito");
+                return this.ValidIfExistByBoll(status, $"Categoria con Id: {id} no existe", $"Categoria con Id: {id} se actualizo con exito");
             }
             catch (Exception e)
             {
@@ -112,7 +112,7 @@ namespace ServerAnime.Controllers
             try
             {
                 bool status = await _categoriaRepo.DeleteOneAsync(id);
-                return this.ValidIfExistElement(status, $"Categoria con Id: {id} no existe", $"Categoria con Id: {id} fue eliminado con exito");
+                return this.ValidIfExistByBoll(status, $"Categoria con Id: {id} no existe", $"Categoria con Id: {id} fue eliminado con exito");
             }
             catch (Exception e)
             {
@@ -120,14 +120,24 @@ namespace ServerAnime.Controllers
             }
         }
 
-        //metodo para valiodar las respuestas de la peticiones
-        private ObjectResult ValidIfExistElement(bool itemStatus, string msgError, string msgOk)
+        //metodo para valiodar las respuestas de la peticiones put y delete
+        private ObjectResult ValidIfExistByBoll(bool itemStatus, string msgError, string msgOk)
         {
             if (itemStatus)
             {
                 return StatusCode(StatusCodes.Status200OK, new { etado = itemStatus, mesagge = msgOk });
             }
             return StatusCode(StatusCodes.Status404NotFound, new { etado = itemStatus, mesagge = msgError });
+        }
+
+        //metodo para valiodar las respuestas de la peticiones post
+        private ObjectResult ValidIfExistElementByEntity(Categorium itemStatus, string msgError, string msgOk)
+        {
+            if (itemStatus != null)
+            {
+                return StatusCode(StatusCodes.Status201Created, new { mesagge = msgOk, etado = itemStatus, });
+            }
+            return StatusCode(StatusCodes.Status400BadRequest, new { mesagge = msgError, etado = itemStatus });
         }
 
         //convietre el json a objeto categoria

@@ -1,12 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using ServerAnime.Data.DataContext;
 using ServerAnime.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ServerAnime.Data.Repositories
 {
@@ -26,15 +20,15 @@ namespace ServerAnime.Data.Repositories
 
         public async Task<Categorium> CreateAsync(Categorium modelo)
         {
-            Categorium filter = await GetOneAsync(modelo.Id);
-            
-            if(filter == null)
+            IEnumerable<Categorium> filter = await GetAllByName(modelo.Nombre);
+
+            if (filter.Any())
             {
-                await _dbContext.AddAsync(modelo);
-                await _dbContext.SaveChangesAsync();
-                return modelo;
+                return null;
             }
-            return null; 
+            await _dbContext.AddAsync(modelo);
+            await _dbContext.SaveChangesAsync();
+            return modelo;
         }
 
         public async Task<bool> DeleteOneAsync(int id)
@@ -45,7 +39,7 @@ namespace ServerAnime.Data.Repositories
                 _dbContext.Categoria.Remove(filter);
                 await _dbContext.SaveChangesAsync();
                 return true;
-            }              
+            }
             return false;
         }
 
@@ -54,23 +48,22 @@ namespace ServerAnime.Data.Repositories
             _Page = page ?? 1;
             Total_quantityShow = await _dbContext.Categoria.CountAsync();
             Total_pages = (int)Math.Ceiling(Total_quantityShow / quantityShow);
-            
-            return  await _dbContext.Categoria.Skip((_Page - 1) * quantityShow).Take(quantityShow).Include(e => e.Catalogos).ToListAsync();
+
+            return await _dbContext.Categoria.Skip((_Page - 1) * quantityShow).Take(quantityShow).Include(e => e.Catalogos).ToListAsync();
         }
 
         public async Task<Categorium> GetOneAsync(int id)
         {
-           return await _dbContext.Categoria.Include(e=>e.Catalogos).FirstOrDefaultAsync(e => e.Id == id);
+            return await _dbContext.Categoria.Include(e => e.Catalogos).FirstOrDefaultAsync(e => e.Id == id);
         }
 
         public async Task<bool> UpdateOneAsync(int id, Categorium modelo)
         {
             Categorium filter = await GetOneAsync(id);
             if (filter != null)
-            {            
-                modelo.UpdateAt = Convert.ToDateTime(DateTime.Now.ToString("yyyy-dd-MM HH:mm:ss"));
-                //filter.UpdateAt = Convert.ToDateTime(DateTime.Now.ToString("yyyy-dd-MM HH:mm:ss"));
-                _dbContext.Categoria.Update(modelo);
+            {
+                filter.UpdateAt = Convert.ToDateTime(DateTime.Now.ToString("yyyy-dd-MM HH:mm:ss"));
+                filter.Nombre = modelo.Nombre;
                 await _dbContext.SaveChangesAsync();
                 return true;
             }
@@ -79,7 +72,7 @@ namespace ServerAnime.Data.Repositories
 
         public async Task<IEnumerable<Categorium>> GetAllByName(string filter)
         {
-           return await _dbContext.Categoria.Where(e => e.Nombre.Contains(filter)).ToListAsync();
+            return await _dbContext.Categoria.Where(e => e.Nombre.Contains(filter)).ToListAsync();
         }
     }
 }
