@@ -7,7 +7,7 @@ using ServerAnime.Model;
 namespace ServerAnime.Data.DataContext
 {
     public partial class serveranimedbContext : DbContext
-    {      
+    {
         public serveranimedbContext(DbContextOptions<serveranimedbContext> options)
             : base(options)
         {
@@ -18,15 +18,11 @@ namespace ServerAnime.Data.DataContext
         public virtual DbSet<Categorium> Categoria { get; set; } = null!;
         public virtual DbSet<Estado> Estados { get; set; } = null!;
         public virtual DbSet<Genero> Generos { get; set; } = null!;
+        public virtual DbSet<Role> Roles { get; set; } = null!;
         public virtual DbSet<Usuario> Usuarios { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-               // optionsBuilder.UseMySql("server=localhost;port=3306;database=serveranimedb;uid=root;pwd=123456", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.30-mysql"));
-            }
+        {         
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -194,11 +190,41 @@ namespace ServerAnime.Data.DataContext
                     .HasColumnName("update_at");
             });
 
-            modelBuilder.Entity<Usuario>(entity =>
+            modelBuilder.Entity<Role>(entity =>
             {
-                entity.ToTable("usuario");
+                entity.ToTable("role");
 
                 entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnType("timestamp")
+                    .HasColumnName("created_at")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.Rol)
+                    .HasMaxLength(45)
+                    .HasColumnName("rol");
+
+                entity.Property(e => e.UpdateAt)
+                    .HasColumnType("timestamp")
+                    .HasColumnName("update_at");
+            });
+
+            modelBuilder.Entity<Usuario>(entity =>
+            {
+                entity.HasKey(e => new { e.Id, e.RoleId })
+                    .HasName("PRIMARY")
+                    .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
+
+                entity.ToTable("usuario");
+
+                entity.HasIndex(e => e.RoleId, "fk_Usuario_Role1_idx");
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("id");
+
+                entity.Property(e => e.RoleId).HasColumnName("Role_id");
 
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("timestamp")
@@ -216,6 +242,12 @@ namespace ServerAnime.Data.DataContext
                 entity.Property(e => e.Username)
                     .HasMaxLength(45)
                     .HasColumnName("username");
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.Usuarios)
+                    .HasForeignKey(d => d.RoleId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_Usuario_Role1");
             });
 
             OnModelCreatingPartial(modelBuilder);
