@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using ServerAnime.Data.Repositories;
 using ServerAnime.Model;
@@ -9,6 +10,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ServerAnime.Controllers
 {
+    [EnableCors("Reglascors")]
     [Route("api/categoria")]
     [ApiController]
     public class CategoriaController : ControllerBase
@@ -79,9 +81,7 @@ namespace ServerAnime.Controllers
         public async Task<IActionResult> PostNewCtegoria([FromBody] CategoriaDto modelo)
         {
             try
-            {
-                // Categorium categoriaMap = _mapper.Map<Categorium>(modelo);
-                //return StatusCode(StatusCodes.Status201Created, await _categoriaRepo.CreateAsync(this.RequesCategoria(modelo)));
+            {              
                 return this.ValidIfExistElementByEntity(await _categoriaRepo.CreateAsync(this.RequesCategoria(modelo)), $"Categoria con Nombre: {modelo.Nombre} ya existe", $"Categoria con Nombre: {modelo.Nombre} se creo con exito");
             }
             catch (Exception e)

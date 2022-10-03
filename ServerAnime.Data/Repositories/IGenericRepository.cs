@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ServerAnime.Data.Repositories
+﻿namespace ServerAnime.Data.Repositories
 {
     public interface IGenericRepository<Entity> where Entity : class
     {

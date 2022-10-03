@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using ServerAnime;
 using ServerAnime.Data.DataContext;
 using ServerAnime.Data.Repositories;
@@ -14,7 +13,8 @@ builder.Services.AddDbContext<serveranimedbContext>(options =>
 );
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<IGenericRepository<Categorium>, CategoriaRepository>();
-builder.Services.AddControllers().AddJsonOptions(x => { 
+builder.Services.AddControllers().AddJsonOptions(x =>
+{
     x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
     x.JsonSerializerOptions.WriteIndented = true;
     x.JsonSerializerOptions.Converters.Add(new CustomJsonConverterForType());
@@ -24,6 +24,12 @@ builder.Services.AddControllers().AddJsonOptions(x => {
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// configure cors
+string reglas = "Reglascors";
+builder.Services.AddCors(opt =>
+    opt.AddPolicy(reglas, builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod())
+);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -32,6 +38,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(reglas);
 
 app.UseAuthorization();
 
