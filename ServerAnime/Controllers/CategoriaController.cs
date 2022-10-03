@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using ServerAnime.Data.Repositories;
@@ -12,6 +13,7 @@ namespace ServerAnime.Controllers
 {
     [EnableCors("Reglascors")]
     [Route("api/categoria")]
+    [Authorize]
     [ApiController]
     public class CategoriaController : ControllerBase
     {

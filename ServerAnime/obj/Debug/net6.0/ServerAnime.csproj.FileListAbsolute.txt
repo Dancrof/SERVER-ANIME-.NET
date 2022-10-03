@@ -37,3 +37,11 @@ C:\Users\Bryan\Desktop\ServerAnime\ServerAnime\bin\Debug\net6.0\ServerAnime.Data
 C:\Users\Bryan\Desktop\ServerAnime\ServerAnime\bin\Debug\net6.0\ServerAnime.Model.pdb
 C:\Users\Bryan\Desktop\ServerAnime\ServerAnime\bin\Debug\net6.0\AutoMapper.dll
 C:\Users\Bryan\Desktop\ServerAnime\ServerAnime\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\Bryan\Desktop\ServerAnime\ServerAnime\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Bryan\Desktop\ServerAnime\ServerAnime\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\Bryan\Desktop\ServerAnime\ServerAnime\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\Bryan\Desktop\ServerAnime\ServerAnime\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\Bryan\Desktop\ServerAnime\ServerAnime\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\Bryan\Desktop\ServerAnime\ServerAnime\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\Bryan\Desktop\ServerAnime\ServerAnime\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Bryan\Desktop\ServerAnime\ServerAnime\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
