@@ -2,6 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using ServerAnime.Model;
 using ServerAnime.Model.ModelDto;
+using ServerAnime.Model.Utils;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -41,7 +42,7 @@ namespace ServerAnime.Controllers
                     SecurityToken tokenConfig = tokenHandler.CreateToken(tokenDescriptor);
                     string createToken = tokenHandler.WriteToken(tokenConfig);
 
-                    return StatusCode(StatusCodes.Status202Accepted, new { Token_access = createToken });
+                    return StatusCode(StatusCodes.Status202Accepted, new { Token_access = createToken});
                 }
                 return StatusCode(StatusCodes.Status401Unauthorized, new { msg = "Username o Passwor Incorrecto" });
             }

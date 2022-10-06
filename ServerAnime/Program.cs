@@ -15,8 +15,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<serveranimedbContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("MysqlConnection"), ServerVersion.Parse("8.0.30-mysql"))
 );
+// agg scoped de los repopsitorios
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<IGenericRepository<Categorium>, CategoriaRepository>();
+builder.Services.AddScoped<IGenericRepository<Role>, RolRepository>();
 
 //configurate of jwt
 builder.Configuration.AddJsonFile("appsettings.json");

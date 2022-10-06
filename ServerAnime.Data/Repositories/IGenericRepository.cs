@@ -1,4 +1,6 @@
-﻿namespace ServerAnime.Data.Repositories
+﻿using ServerAnime.Model;
+
+namespace ServerAnime.Data.Repositories
 {
     public interface IGenericRepository<Entity> where Entity : class
     {

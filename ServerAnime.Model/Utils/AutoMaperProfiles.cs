@@ -14,6 +14,7 @@ namespace ServerAnime.Model.Utils
         public AutoMaperProfiles()
         {
             CreateMap<Categorium, CategoriaDto>();
+            CreateMap<Role, RolDto>();
         }
     }
 }
